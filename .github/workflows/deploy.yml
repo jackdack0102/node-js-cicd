@@ -37,28 +37,28 @@ jobs:
             - name: Configure AWS Credentials via OIDC
               uses: aws-actions/configure-aws-credentials@v4
               with:
-                    role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-                    aws-region: ${{ env.AWS_REGION }}
+                    role-to-assume: ${{secrets.AWS_ROLE_TO_ASSUME}}
+                    aws-region: ${{env.AWS_REGION}}
                     audience: sts.amazonaws.com
 
             - name: Upload Deploy Zip to S3
               run: |
-                aws s3 cp deploy.zip s3://${{ env.S3_BUCKET_NAME }}/deploy.zip
+                aws s3 cp deploy.zip s3://${{env.S3_BUCKET_NAME}}/deploy.zip
 
             - name: Trigger AWS SSM Run Command to Deploy
               run: |
                 aws ssm send-command \
-                --instance-ids "${{ env.EC2_INSTANCE_ID }}" \
+                --instance-ids "${{env.EC2_INSTANCE_ID}}" \
                 --document-name "AWS-RunShellScript" \
                 --comment "Deploying NodeJS App via GitHub Actions" \
                 --parameters 'commands=[
                     "cd /var/www/nodejs-cicd",
-                    "aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/deploy.zip .",
+                    "aws s3 cp s3://${{env.S3_BUCKET_NAME}}/deploy.zip .",
                     "unzip -o deploy.zip",
                     "rm deploy.zip",
                     "pm2 describe enterprise-app > /dev/null && pm2 reload enterprise-app --update-env || NODE_ENV=production PORT=3000 pm2 start server.js --name \"enterprise-app\""
                 ]' \
-                --region ${{ env.AWS_REGION }}
+                --region ${{env.AWS_REGION}}
 
 
 
@@ -69,10 +69,13 @@ jobs:
 
 
 
-                
+
 
 
             
+
+
+                
 
 
 
