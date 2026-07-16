@@ -13,6 +13,7 @@ env:
     AWS_REGION: "ap-southeast-1"
     S3_BUCKET_NAME: "my-enterprise-deploy-bucket-2026"
     EC2_INSTANCE_ID: "i-0e4c460063e83395b"
+    FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
     deploy:
