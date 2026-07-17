@@ -48,7 +48,7 @@ jobs:
 
             - name: Upload Deploy Zip to S3
               run: |
-                aws s3 cp deploy.zip s3://${{env.S3_BUCKET_NAME}}/deploy.zip
+                aws s3 cp deploy.zip s3://${{ env.S3_BUCKET_NAME }}/deploy.zip
 
             - name: Trigger AWS SSM Run Command to Deploy
               run: |
@@ -58,7 +58,7 @@ jobs:
                 --comment "Deploying NodeJS App via GitHub Actions" \
                 --parameters 'commands=[
                     "cd /var/www/nodejs-cicd",
-                    "aws s3 cp s3://${{env.S3_BUCKET_NAME}}/deploy.zip .",
+                    "aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/deploy.zip .",
                     "unzip -o deploy.zip",
                     "rm deploy.zip",
                     "pm2 describe enterprise-app > /dev/null && pm2 reload enterprise-app --update-env || NODE_ENV=production PORT=3000 pm2 start server.js --name \"enterprise-app\""
